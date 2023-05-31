@@ -5,6 +5,7 @@ const path = require('path');
 // extra security packages
 const helmet = require('helmet');
 const xss = require('xss-clean');
+const cors = require('cors');
 
 const express = require('express');
 const app = express();
@@ -21,8 +22,10 @@ const errorHandlerMiddleware = require('./middleware/error-handler');
 app.set('trust proxy', 1);
 
 app.use(express.static('./public'));
+app.use(cors());
+
 app.use(express.json());
-app.use(helmet());
+app.use(helmet.crossOriginResourcePolicy({ policy: 'cross-origin' }));
 
 app.use(xss());
 
